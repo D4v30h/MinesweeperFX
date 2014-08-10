@@ -70,47 +70,14 @@ public class MinesweeperFX extends Application {
     
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
-//        try {
-//        System.out.println("Working Directory = " +
-//              System.getProperty("user.dir"));
-//        String current = new java.io.File( "." ).getCanonicalPath();
-//        System.out.println("Current dir:"+current);
-//        String currentDir = System.getProperty("user.dir");
-//        System.out.println("Current dir using System:" +currentDir);
-//        
-//        File fileSquare = new File("square.png");
-//        System.out.println("square.png exists? "+fileSquare.exists());
-//        System.out.println("square.png isFile? "+fileSquare.isFile());
-//        System.out.println("square.png canRead? "+fileSquare.canRead());
-//        System.out.println("square.png to URI: " +fileSquare.toURI().toString());
-//        System.out.println("square.png externalForm: "+Images.class.getResource("square.png").toExternalForm());
-//        System.out.println(Images.square.getClass());
-//        Images.InitialiseImages();
-//        } catch (Exception e) { System.err.println("Path exception: "+e); }
-        Images.InitialiseImages();
-        
         instance = this;
-        
+        this.stage = stage;
+        Images.InitialiseImages();
         vbox = new VBox();
         grid = new GridPane();
         
-//        Button btn = new Button();
-//        btn.setText("About");
-//        btn.setOnAction(new EventHandler<ActionEvent>() {
-//            
-//            @Override
-//            public void handle(ActionEvent event) {
-//                System.out.println("TODO: Open About dialog.");
-//            }
-//        });
-        
         setupMenuBar();
         vbox.getChildren().addAll(menuBar, grid);
-        //GridPane.setColumnSpan(menuBar, GridPane.REMAINING);
-        //grid.getChildren().addAll(menuBar);
-//        GridPane.setRowIndex(btn, 2);
-//        grid.getChildren().add(btn);
         
         scene = new Scene(vbox, 16*Difficulty.EASY.getGridSize(), 16*Difficulty.EASY.getGridSize() + 51);
         

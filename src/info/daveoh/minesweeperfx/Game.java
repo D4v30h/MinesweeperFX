@@ -18,7 +18,7 @@
 package info.daveoh.minesweeperfx;
 
 /**
- *
+ * Manages the game.
  * @author David Hodgson <daveoh@daveoh.info>
  */
 public class Game {

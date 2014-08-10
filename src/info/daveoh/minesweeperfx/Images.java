@@ -26,60 +26,15 @@ import javafx.scene.image.Image;
  */
 public class Images {
     
-//    static {
-//        System.out.println("Images() static initialisation block");
-//        try {
-//        System.out.println("Working Directory = " +
-//              System.getProperty("user.dir"));
-//        String current = new java.io.File( "." ).getCanonicalPath();
-//        System.out.println("Current dir:"+current);
-//        String currentDir = System.getProperty("user.dir");
-//        System.out.println("Current dir using System:" +currentDir);
-//        } catch (Exception e) { System.err.println("Path exception: "+e); }
-//        
-//        File fileSquare = new File("square.png");
-//        System.out.println("square.png exists? "+fileSquare.exists());
-//        System.out.println("square.png isFile? "+fileSquare.isFile());
-//        System.out.println("square.png canRead? "+fileSquare.canRead());
-//        System.out.println("square.png to URI: " +fileSquare.toURI().toString());
-//        System.out.println("square.png externalForm: "+Images.class.getResource("info/daveoh/minesweeperfx/square.png").toExternalForm());
-//    }
-    
-//    static {
-//        try {
-//        square = new Image(new File("square.png").toURI().toURL().toExternalForm());
-//        }
-//        catch (Exception e) {
-//            System.err.println("Images.static exception: "+e);
-//        }
-//    }
-    
     public static void InitialiseImages() {
         try {
-//            System.out.println("Working Directory = " +
-//                System.getProperty("user.dir"));
-//            String current = new java.io.File( "." ).getCanonicalPath();
-//            System.out.println("Current dir:"+current);
-//            String currentDir = System.getProperty("user.dir");
-//            System.out.println("Current dir using System:" +currentDir);
-//            
-//            File fileSquare = new File("square.png");
-//            System.out.println("File URI: "+fileSquare.toURI());
-//            System.out.println("Resource URI: "+Object.class.getResource("/info/daveoh/minesweeperfx/square.png").toURI().toURL());
-//            if (fileSquare.exists() == false) {
-//                throw new RuntimeException("square.png could not be found");
-//            }
-            
-        //square = new Image(new File("square.png").toURI().toURL().toExternalForm());
             square = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square.png").toURI().toURL().toString());
-        
         }
         catch (Exception e) {
             System.err.println("Images.InitialiseImages() exception: "+e);
         }
     }
     
-    //public static final Image square = new Image(Images.class.getResource("square.png").toString());
     public static Image square;
 //    public static final Image squareFlagged = new Image("squareFlagged.png");
 //    public static final Image squareEmpty = new Image("squareEmpty.png");

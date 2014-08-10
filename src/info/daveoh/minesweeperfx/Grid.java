@@ -33,11 +33,6 @@ public class Grid {
     private boolean hasPlacedMines = false;
     
     public Grid(Difficulty difficulty) {
-//        switch (difficulty) {
-//      	case EASY:  gridSize = 5; break;
-//      	case MEDIUM:gridSize = 7; break;
-//      	case HARD:  gridSize = 9; break;
-//        }
         gridSize = difficulty.getGridSize();
         mineCount = difficulty.getMineCount();
         squares = new Square[gridSize][gridSize];
