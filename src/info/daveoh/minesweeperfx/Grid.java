@@ -17,6 +17,8 @@
 
 package info.daveoh.minesweeperfx;
 
+import java.util.Random;
+
 /**
  * A representation of an NxN grid composed of Squares.
  * @author David Hodgson <daveoh@daveoh.info>
@@ -24,6 +26,8 @@ package info.daveoh.minesweeperfx;
 public class Grid {
    
     private int gridSize = 0;
+    private int mineCount = 0;
+    public int getGridSize() { return gridSize; }
     private Square[][] squares = null;
     private boolean isPopulated = false;
     private boolean hasPlacedMines = false;
@@ -35,6 +39,7 @@ public class Grid {
 //      	case HARD:  gridSize = 9; break;
 //        }
         gridSize = difficulty.getGridSize();
+        mineCount = difficulty.getMineCount();
         squares = new Square[gridSize][gridSize];
         populate();
         placeMines();
@@ -62,7 +67,18 @@ public class Grid {
     {
         if (hasPlacedMines == false)
         {
-            // TODO
+            Random random = new Random();
+            int minesPlaced = 0;
+            while (minesPlaced < mineCount) {
+                // Get two random coordinates and set the square as a mine, unless it is a mine already.
+                int randX = Integer.remainderUnsigned(random.nextInt(), gridSize), randY = Integer.remainderUnsigned(random.nextInt(), gridSize);
+                Square square = getSquare(randX, randY);
+                if (square.isMine() == false) {
+                    square.setMine(true);
+                    minesPlaced++;
+                }
+                // Else if the square is already a mine, continue looping without adding one to the count.
+            }
             hasPlacedMines = true;
         }
     }
@@ -75,18 +91,18 @@ public class Grid {
     public Square getSquare(int x, int y) throws IndexOutOfBoundsException
     {
         if ( (x < 0) || (y < 0) || (x >= gridSize) || (y >= gridSize))
-            throw new IndexOutOfBoundsException("Square coordinates must be inside grid.");
+            throw new IndexOutOfBoundsException("Square coordinates must be inside grid. X: "+x+", Y: "+y);
         return squares[x][y];
     }
     
     /**
-     * TODO
      * @return The number of mines around a square.
      */
     public int getNumMinesAroundSquare(int x, int y) throws IndexOutOfBoundsException
     {
         if ( (x < 0) || (y < 0) || (x >= gridSize) || (y >= gridSize))
             throw new IndexOutOfBoundsException("Square coordinates must be inside grid.");
+        // TODO: Implement getNumMinesAroundSquare()
         return 0;
     }
 }

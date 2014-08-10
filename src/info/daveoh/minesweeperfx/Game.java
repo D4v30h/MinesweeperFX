@@ -22,10 +22,30 @@ package info.daveoh.minesweeperfx;
  * @author David Hodgson <daveoh@daveoh.info>
  */
 public class Game {
-    // Supports two players.
-    Player[] players = new Player[2];
+    private static final int MAX_PLAYERS = 1; // TODO: Support two players.
+    private final Difficulty difficulty;
+    
+    private Player[] players = new Player[MAX_PLAYERS];
+    public Player getPlayer(int index) throws IndexOutOfBoundsException {
+        if ( (index < 0) || (index > MAX_PLAYERS-1) )
+                throw new IndexOutOfBoundsException("Player index "+index+" is invalid. Max players: "+MAX_PLAYERS);
+        return players[index];
+    }
+    
+    private int playerCount = 0;
+    public int getPlayerCount() { return playerCount; }
 
-    public Game() {
-      
+    public Game(int numPlayers, Difficulty difficulty) throws IllegalArgumentException {
+        if ( (numPlayers <= 0) || (numPlayers > MAX_PLAYERS) )
+                throw new IndexOutOfBoundsException("Number of players "+numPlayers+" is invalid. Max players: "+MAX_PLAYERS);
+        
+        this.difficulty = difficulty;
+        
+        for (int i = 0; i < numPlayers; i++) {
+            players[i] = new Player();
+            players[i].NewGame(difficulty);
+            Grid grid = players[i].getGrid();
+            MinesweeperFX.getInstance().initialiseGrid(grid);
+        }
     }
 }

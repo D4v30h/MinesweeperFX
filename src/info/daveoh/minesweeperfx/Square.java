@@ -17,6 +17,11 @@
 
 package info.daveoh.minesweeperfx;
 
+import javafx.event.EventHandler;
+import javafx.event.EventType;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 /**
  * A representation of a field/tile on the minefield.
  * @author David Hodgson <daveoh@daveoh.info>
@@ -27,10 +32,19 @@ public class Square {
     public boolean isMine() { return isMine; }
     private boolean isFlagged = false;
     public boolean isFlagged() { return isFlagged; }
+    private ImageView imageView = new ImageView(Images.square);
+    public ImageView getImageView() { return imageView; }
     
-    public Square () {}
-    public Square (boolean isMine) {
-        this.isMine = isMine;
+    public Square () {
+        //imageView.setOnMouseClicked(new MouseEventImpl());
+        imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                if (isMine())
+                    System.err.println("I'm a mine!");
+                else
+                    System.out.println("I'm not a mine.");
+            }
+        });
     }
     
     /**
@@ -51,4 +65,6 @@ public class Square {
     {
         this.isMine = isMine;
     }
+    
+    
 }

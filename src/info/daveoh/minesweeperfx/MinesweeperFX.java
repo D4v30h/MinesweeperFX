@@ -17,12 +17,21 @@
 
 package info.daveoh.minesweeperfx;
 
+import java.io.File;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -31,28 +40,174 @@ import javafx.stage.Stage;
  */
 public class MinesweeperFX extends Application {
     
-    private Game game = new Game();
+    private static MinesweeperFX instance = null;
+    public static MinesweeperFX getInstance() { return instance; }
+    
+    // Game
+    private Game game = null;
+    private Difficulty difficulty = Difficulty.EASY;
+    
+    // UI
+        private VBox vbox;
+        private GridPane grid;
+        private Scene scene;
+        private Stage stage;
+    // MenuBar
+        final private MenuBar menuBar = new MenuBar();
+    // Main menus
+        final private Menu menuGame = new Menu("Game");
+        final private Menu menuHelp = new Menu("Help");
+    // Menu Game items
+        final private Menu menuGameNew = new Menu("New Game");
+        final private MenuItem menuGameNew1 = new MenuItem("One player");
+        final private MenuItem menuGameNew2 = new MenuItem("Two players");
+        final private Menu menuGameDiff = new Menu("Difficulty");
+        final private CheckMenuItem menuGameDiffEasy = new CheckMenuItem("Easy");
+        final private CheckMenuItem menuGameDiffMedium = new CheckMenuItem("Medium");
+        final private CheckMenuItem menuGameDiffHard = new CheckMenuItem("Hard");
+        final private MenuItem menuGameEnd = new MenuItem("End Game");
+        final private MenuItem menuGameExit = new MenuItem("Exit");
     
     @Override
-    public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("About");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("TODO: Open About dialog.");
+    public void start(Stage stage) {
+        this.stage = stage;
+//        try {
+//        System.out.println("Working Directory = " +
+//              System.getProperty("user.dir"));
+//        String current = new java.io.File( "." ).getCanonicalPath();
+//        System.out.println("Current dir:"+current);
+//        String currentDir = System.getProperty("user.dir");
+//        System.out.println("Current dir using System:" +currentDir);
+//        
+//        File fileSquare = new File("square.png");
+//        System.out.println("square.png exists? "+fileSquare.exists());
+//        System.out.println("square.png isFile? "+fileSquare.isFile());
+//        System.out.println("square.png canRead? "+fileSquare.canRead());
+//        System.out.println("square.png to URI: " +fileSquare.toURI().toString());
+//        System.out.println("square.png externalForm: "+Images.class.getResource("square.png").toExternalForm());
+//        System.out.println(Images.square.getClass());
+//        Images.InitialiseImages();
+//        } catch (Exception e) { System.err.println("Path exception: "+e); }
+        Images.InitialiseImages();
+        
+        instance = this;
+        
+        vbox = new VBox();
+        grid = new GridPane();
+        
+//        Button btn = new Button();
+//        btn.setText("About");
+//        btn.setOnAction(new EventHandler<ActionEvent>() {
+//            
+//            @Override
+//            public void handle(ActionEvent event) {
+//                System.out.println("TODO: Open About dialog.");
+//            }
+//        });
+        
+        setupMenuBar();
+        vbox.getChildren().addAll(menuBar, grid);
+        //GridPane.setColumnSpan(menuBar, GridPane.REMAINING);
+        //grid.getChildren().addAll(menuBar);
+//        GridPane.setRowIndex(btn, 2);
+//        grid.getChildren().add(btn);
+        
+        scene = new Scene(vbox, 16*Difficulty.EASY.getGridSize(), 16*Difficulty.EASY.getGridSize() + 51);
+        
+        stage.setTitle("MinesweeperFX");
+        stage.setScene(scene);
+        stage.show();
+        stage.sizeToScene();
+    }
+    
+    public MenuBar setupMenuBar() {
+        
+        // Setup
+        menuBar.getMenus().addAll(menuGame, menuHelp);
+        menuGameEnd.setDisable(true);
+        menuGameDiffEasy.setSelected(true);
+        
+        // Menu Game > New Game
+        menuGameNew1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                game = new Game(1, difficulty);
+                menuGameEnd.setDisable(false);
             }
         });
+        menuGameNew2.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                game = new Game(2, difficulty);
+                menuGameEnd.setDisable(false);
+            }
+        });
+        menuGameNew.getItems().addAll(menuGameNew1, menuGameNew2);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        // Menu Game > Difficulty
+        menuGameDiffEasy.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                setDifficulty(Difficulty.EASY);
+            }
+        });
+        menuGameDiffMedium.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                setDifficulty(Difficulty.MEDIUM);
+            }
+        });
+        menuGameDiffHard.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                setDifficulty(Difficulty.HARD);
+            }
+        });
+        menuGameDiff.getItems().addAll(menuGameDiffEasy, menuGameDiffMedium, menuGameDiffHard);
         
-        Scene scene = new Scene(root, 300, 250);
+        menuGameEnd.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                // TODO
+                menuGameEnd.setDisable(true);
+            }
+        });
+        menuGameExit.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                // Exit the application.
+                Platform.exit();
+            }
+        });
+        menuGame.getItems().addAll(menuGameNew, menuGameDiff, menuGameEnd, menuGameExit);
+        return menuBar;
+    }
+    
+    /**
+     * Sets the difficulty of any newly created games.
+     * @param diff The difficulty to set.
+     */
+    public void setDifficulty(Difficulty diff) {
+        difficulty = diff;
+        // Remove check from all menu items.
+        menuGameDiffEasy.setSelected(false);
+        menuGameDiffMedium.setSelected(false);
+        menuGameDiffHard.setSelected(false);
+        // Check appropriate menu item.
+        switch (diff) {
+            case EASY: menuGameDiffEasy.setSelected(true); break;
+            case MEDIUM: menuGameDiffMedium.setSelected(true); break;
+            case HARD: menuGameDiffHard.setSelected(true); break;
+        }
+    }
+    
+    public void initialiseGrid(Grid gameGrid) {
+        grid.getChildren().clear();
+        int size = gameGrid.getGridSize();
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                ImageView iv = gameGrid.getSquare(x, y).getImageView();
+                grid.getChildren().add(iv);
+                GridPane.setRowIndex(iv, x);
+                GridPane.setColumnIndex(iv, y);
+            }
+        }
         
-        primaryStage.setTitle("MinesweeperFX");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        scene.getWindow().setWidth(16*size);
+        scene.getWindow().setHeight(16*size + 51);
     }
 
     /**

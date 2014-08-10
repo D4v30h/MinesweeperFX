@@ -22,9 +22,10 @@ package info.daveoh.minesweeperfx;
  * @author David Hodgson <daveoh@daveoh.info>
  */
 public enum Difficulty {
-    EASY(5, 10),
-    MEDIUM(7, 20),
-    HARD(9, 30);
+    // Difficulty( gridSize, mineCount )
+    EASY(9, 10),
+    MEDIUM(12, 20),
+    HARD(15, 30);
     
     private final int gridSize;
     public int getGridSize() { return gridSize; }

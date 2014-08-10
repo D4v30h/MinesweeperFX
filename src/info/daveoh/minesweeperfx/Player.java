@@ -27,7 +27,11 @@ public class Player {
     private Grid grid = null;
     private int wins = 0;
     private int losses = 0;
+    private static int id = 0;
     
+    public Player() {
+        this.name = "Unnamed_"+id++;
+    }
     public Player(String name) {
         this.name = name;
     }
@@ -35,4 +39,6 @@ public class Player {
     public void NewGame(Difficulty difficulty) {
         grid = new Grid(difficulty);
     }
+    
+    public Grid getGrid() { return grid; }
 }
