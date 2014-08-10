@@ -32,7 +32,7 @@ public class Square {
     public boolean isMine() { return isMine; }
     private boolean isFlagged = false;
     public boolean isFlagged() { return isFlagged; }
-    private ImageView imageView = new ImageView(Images.square);
+    private ImageView imageView = new ImageView(Images.Type.SQUARE.getImage());
     public ImageView getImageView() { return imageView; }
     
     public Square () {

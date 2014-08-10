@@ -26,26 +26,68 @@ import javafx.scene.image.Image;
  */
 public class Images {
     
+    public enum Type {
+        SQUARE { public Image getImage() { return Images.square; } },
+        SQUARE_FLAGGED { public Image getImage() { return Images.squareFlagged; } },
+        SQUARE_EMPTY { public Image getImage() { return Images.squareEmpty; } },
+        SQUARE_MINE { public Image getImage() { return Images.squareMine; } },
+        SQUARE_MINE_RED { public Image getImage() { return Images.squareMineRed; } },
+        SQUARE_NO_MINE { public Image getImage() { return Images.squareNoMine; } },
+        SQUARE_1 { public Image getImage() { return Images.square1; } },
+        SQUARE_2 { public Image getImage() { return Images.square2; } },
+        SQUARE_3 { public Image getImage() { return Images.square3; } },
+        SQUARE_4 { public Image getImage() { return Images.square4; } },
+        SQUARE_5 { public Image getImage() { return Images.square5; } },
+        SQUARE_6 { public Image getImage() { return Images.square6; } },
+        SQUARE_7 { public Image getImage() { return Images.square7; } },
+        SQUARE_8 { public Image getImage() { return Images.square8; } };
+        public abstract Image getImage();
+    }
+    
     public static void InitialiseImages() {
         try {
             square = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square.png").toURI().toURL().toString());
+            squareFlagged = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareFlagged.png").toURI().toURL().toString());
+            squareEmpty = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareEmpty.png").toURI().toURL().toString());
+            squareMine = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareMine.png").toURI().toURL().toString());
+            squareMineRed = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareMineRed.png").toURI().toURL().toString());
+            squareNoMine = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareNoMine.png").toURI().toURL().toString());
+            square1 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square1.png").toURI().toURL().toString());
+            square2 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square2.png").toURI().toURL().toString());
+            square3 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square3.png").toURI().toURL().toString());
+            square4 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square4.png").toURI().toURL().toString());
+            square5 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square5.png").toURI().toURL().toString());
+            square6 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square6.png").toURI().toURL().toString());
+            square7 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square7.png").toURI().toURL().toString());
+            square8 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square8.png").toURI().toURL().toString());
         }
         catch (Exception e) {
             System.err.println("Images.InitialiseImages() exception: "+e);
         }
     }
     
-    public static Image square;
-//    public static final Image squareFlagged = new Image("squareFlagged.png");
-//    public static final Image squareEmpty = new Image("squareEmpty.png");
-//    public static final Image squareMine = new Image("squareMine.png");
-//    public static final Image square1 = new Image("square1.png");
-//    public static final Image square2 = new Image("square2.png");
-//    public static final Image square3 = new Image("square3.png");
-//    public static final Image square4 = new Image("square4.png");
-//    public static final Image square5 = new Image("square5.png");
-//    public static final Image square6 = new Image("square6.png");
-//    public static final Image square7 = new Image("square7.png");
-//    public static final Image square8 = new Image("square8.png");
+    private static Image square;
+    private static Image squareFlagged;
+    private static Image squareEmpty;
+    private static Image squareMine;
+    private static Image squareMineRed;
+    private static Image squareNoMine;
+    private static Image square1;
+    private static Image square2;
+    private static Image square3;
+    private static Image square4;
+    private static Image square5;
+    private static Image square6;
+    private static Image square7;
+    private static Image square8;
+    
+//    public static Image getImage(Type type) {
+//        switch(type) {
+//            case SQUARE: return square;
+//            case SQUARE_FLAGGED: return squareFlagged;
+//            case SQUARE_EMPTY: return squareEmpty;
+//            case SQUARE_MINE: 
+//        }
+//    }
     
 }
