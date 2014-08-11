@@ -32,7 +32,7 @@ public class Images {
         SQUARE_EMPTY { public Image getImage() { return Images.squareEmpty; } },
         SQUARE_MINE { public Image getImage() { return Images.squareMine; } },
         SQUARE_MINE_RED { public Image getImage() { return Images.squareMineRed; } },
-        SQUARE_NO_MINE { public Image getImage() { return Images.squareNoMine; } },
+        SQUARE_MINE_FLAGGED { public Image getImage() { return Images.squareMineFlagged; } },
         SQUARE_1 { public Image getImage() { return Images.square1; } },
         SQUARE_2 { public Image getImage() { return Images.square2; } },
         SQUARE_3 { public Image getImage() { return Images.square3; } },
@@ -51,7 +51,7 @@ public class Images {
             squareEmpty = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareEmpty.png").toURI().toURL().toString());
             squareMine = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareMine.png").toURI().toURL().toString());
             squareMineRed = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareMineRed.png").toURI().toURL().toString());
-            squareNoMine = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareNoMine.png").toURI().toURL().toString());
+            squareMineFlagged = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/squareMineFlagged.png").toURI().toURL().toString());
             square1 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square1.png").toURI().toURL().toString());
             square2 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square2.png").toURI().toURL().toString());
             square3 = new Image(Object.class.getResource("/info/daveoh/minesweeperfx/square3.png").toURI().toURL().toString());
@@ -71,7 +71,7 @@ public class Images {
     private static Image squareEmpty;
     private static Image squareMine;
     private static Image squareMineRed;
-    private static Image squareNoMine;
+    private static Image squareMineFlagged;
     private static Image square1;
     private static Image square2;
     private static Image square3;
@@ -80,14 +80,5 @@ public class Images {
     private static Image square6;
     private static Image square7;
     private static Image square8;
-    
-//    public static Image getImage(Type type) {
-//        switch(type) {
-//            case SQUARE: return square;
-//            case SQUARE_FLAGGED: return squareFlagged;
-//            case SQUARE_EMPTY: return squareEmpty;
-//            case SQUARE_MINE: 
-//        }
-//    }
     
 }
