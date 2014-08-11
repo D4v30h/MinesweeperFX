@@ -31,8 +31,11 @@ public class Grid {
     private Square[][] squares = null;
     private boolean isPopulated = false;
     private boolean hasPlacedMines = false;
+    private Player player;
+    public Player getPlayer() { return player; }
     
-    public Grid(Difficulty difficulty) {
+    public Grid(Player player, Difficulty difficulty) {
+        this.player = player;
         gridSize = difficulty.getGridSize();
         mineCount = difficulty.getMineCount();
         squares = new Square[gridSize][gridSize];
@@ -48,7 +51,7 @@ public class Grid {
         if (isPopulated == false) {
             for (int x = 0; x < gridSize; x++) {
                 for (int y = 0; y < gridSize; y++) {
-                    squares[x][y] = new Square();
+                    squares[x][y] = new Square(this, x, y);
                 }
             }
             isPopulated = true;
@@ -91,6 +94,8 @@ public class Grid {
     }
     
     /**
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
      * @return The number of mines around a square.
      */
     public int getNumMinesAroundSquare(int x, int y) throws IndexOutOfBoundsException
@@ -98,6 +103,25 @@ public class Grid {
         if ( (x < 0) || (y < 0) || (x >= gridSize) || (y >= gridSize))
             throw new IndexOutOfBoundsException("Square coordinates must be inside grid.");
         // TODO: Implement getNumMinesAroundSquare()
-        return 0;
+        int fromX = Math.max(x-1, 0), toX = Math.min(x+1, gridSize-1),
+            fromY = Math.max(y-1, 0), toY = Math.min(y+1, gridSize-1),
+            count = 0;
+        for (int i = fromX; i <= toX; i++) {
+            for (int j = fromY; j <= toY; j++) {
+                if ( (i == x) && (j == y) ) { continue; }
+                if (squares[i][j].isMine()) { count++; }
+            }
+        }
+        return count;
+    }
+    
+    /**
+     * Called when the user clicks on a mine and loses the game.
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     */
+    public void mineClicked(int x, int y) {
+        // TODO: Implement mineClicked()
+        
     }
 }

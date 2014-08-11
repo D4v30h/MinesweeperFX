@@ -34,15 +34,18 @@ public class Square {
     public boolean isFlagged() { return isFlagged; }
     private ImageView imageView = new ImageView(Images.Type.SQUARE.getImage());
     public ImageView getImageView() { return imageView; }
+    private Grid grid;
+    private int x, y;
     
-    public Square () {
-        //imageView.setOnMouseClicked(new MouseEventImpl());
+    public Square (final Grid grid, final int x, final int y) {
+        this.grid = grid;
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
                 if (isMine())
                     System.err.println("I'm a mine!");
                 else
                     System.out.println("I'm not a mine.");
+                grid.mineClicked(x, y);
             }
         });
     }
@@ -66,5 +69,35 @@ public class Square {
         this.isMine = isMine;
     }
     
+    /**
+     * Updates the Square's image to that of its clicked counterpart.
+     */
+    public void click() {
+        if (isMine()) {
+            imageView.setImage(Images.Type.SQUARE_MINE_RED.getImage());
+        }
+        else {
+            switch (grid.getNumMinesAroundSquare(x, y)) {
+                case 0: imageView.setImage(Images.Type.SQUARE_EMPTY.getImage()); break;
+                case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); break;
+                case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); break;
+                case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); break;
+                case 4: imageView.setImage(Images.Type.SQUARE_4.getImage()); break;
+                case 5: imageView.setImage(Images.Type.SQUARE_5.getImage()); break;
+                case 6: imageView.setImage(Images.Type.SQUARE_6.getImage()); break;
+                case 7: imageView.setImage(Images.Type.SQUARE_7.getImage()); break;
+                case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); break;
+            }
+        }
+    }
+    
+    /**
+     * Used at the end of the game to reveal any unclicked mines as mines.
+     */
+    public void revealIfMine() {
+        if (isMine()) {
+            imageView.setImage(Images.Type.SQUARE_MINE.getImage());
+        }
+    }
     
 }

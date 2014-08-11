@@ -29,16 +29,37 @@ public class Player {
     private int losses = 0;
     private static int id = 0;
     
+    /**
+     * Generates a Player with the name "Unnamed_" followed by a unique ID.
+     */
     public Player() {
         this.name = "Unnamed_"+id++;
     }
+    /**
+     * Generates a Player with the specified name.
+     * @param name The name of the player.
+     */
     public Player(String name) {
         this.name = name;
     }
     
+    /**
+     * Starts a new game for the player with the specified difficulty.
+     * @param difficulty Desired difficulty level.
+     */
     public void NewGame(Difficulty difficulty) {
-        grid = new Grid(difficulty);
+        grid = new Grid(this, difficulty);
     }
     
+    /**
+     * Called when the player loses the game by clicking on a mine.
+     */
+    public void gameOver() {
+        // TODO: Player.gameOver()
+    }
+    
+    /**
+     * @return The grid of the game associated by the player.
+     */
     public Grid getGrid() { return grid; }
 }
