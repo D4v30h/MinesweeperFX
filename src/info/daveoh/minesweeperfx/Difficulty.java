@@ -24,8 +24,8 @@ package info.daveoh.minesweeperfx;
 public enum Difficulty {
     // Difficulty( gridSize, mineCount )
     EASY(9, 10),
-    MEDIUM(12, 20),
-    HARD(15, 30);
+    MEDIUM(12, 25),
+    HARD(15, 60);
     
     private final int gridSize;
     public int getGridSize() { return gridSize; }
