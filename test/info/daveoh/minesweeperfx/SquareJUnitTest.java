@@ -45,7 +45,7 @@ public class SquareJUnitTest {
     
     @Before
     public void setUp() {
-        square = new Square();
+        square = new Square(new Grid(new Player(), Difficulty.EASY), 0, 0);
     }
     
     @After

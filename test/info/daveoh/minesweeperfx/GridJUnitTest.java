@@ -47,7 +47,7 @@ public class GridJUnitTest {
     
     @Before
     public void setUp() {
-        grid = new Grid(difficulty);
+        grid = new Grid(new Player(), difficulty);
     }
     
     @After

@@ -17,6 +17,7 @@
 
 package info.daveoh.minesweeperfx;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -98,21 +99,23 @@ public class Grid {
      * @param y The Y coordinate.
      * @return The number of mines around a square.
      */
-    public int getNumMinesAroundSquare(int x, int y) throws IndexOutOfBoundsException
+    public int getNumMinesAroundSquare(int x, int y) throws IndexOutOfBoundsException, IllegalStateException
     {
         if ( (x < 0) || (y < 0) || (x >= gridSize) || (y >= gridSize))
             throw new IndexOutOfBoundsException("Square coordinates must be inside grid. X: "+x+", Y: "+y);
         int fromX = Math.max(x-1, 0), toX = Math.min(x+1, gridSize-1),
             fromY = Math.max(y-1, 0), toY = Math.min(y+1, gridSize-1),
             count = 0;
-        System.out.println("getNumMinesAroundSquare fromX: "+fromX+", toX: "+toX+", fromY: "+fromY+", toY: "+toY);
+        //System.out.println("getNumMinesAroundSquare fromX: "+fromX+", toX: "+toX+", fromY: "+fromY+", toY: "+toY);
         for (int i = fromX; i <= toX; i++) {
             for (int j = fromY; j <= toY; j++) {
                 if ( (i == x) && (j == y) ) { continue; }
                 if (squares[i][j].isMine()) { count++; }
             }
         }
-        System.out.println("Count: "+count);
+        //System.out.println("Count: "+count);
+        if ( (count < 0) || (count > 8) )
+            throw new IllegalStateException("Grid.getNumMinesAroundSquare found an invalid number of mines around a square: "+count);
         return count;
     }
     
@@ -137,6 +140,35 @@ public class Grid {
      * @param y The Y coordinate.
      */
     public void revealAroundSquare(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Square> squaresToReveal = new ArrayList<Square>();
+        {
+            int fromX = Math.max(x-1, 0), toX = Math.min(x+1, gridSize-1),
+                fromY = Math.max(y-1, 0), toY = Math.min(y+1, gridSize-1);
+            for (int i = fromX; i <= toX; i++) {
+                for (int j = fromY; j <= toY; j++) {
+                    if ( (i == x) && (j == y) ) { continue; }
+                    squaresToReveal.add(squares[i][j]);
+                }
+            }
+        }
+        while (squaresToReveal.isEmpty() == false) {
+            Square checkSquare = squaresToReveal.get(0);
+            
+            boolean addToList = checkSquare.revealNotMine();
+            squaresToReveal.remove(0);
+            if (addToList) {
+                int newX = checkSquare.getX(), newY = checkSquare.getY(),
+                    fromX = Math.max(newX-1, 0), toX = Math.min(newX+1, gridSize-1),
+                    fromY = Math.max(newY-1, 0), toY = Math.min(newY+1, gridSize-1);
+                for (int i = fromX; i <= toX; i++) {
+                    for (int j = fromY; j <= toY; j++) {
+                        if ( (i == newX) && (j == newY) ) { continue; }
+                        if (squares[i][j].isRevealed()) { continue; }
+                        squaresToReveal.add(squares[i][j]);
+                    }
+                }
+            }
+            
+        }
     }
 }
