@@ -49,8 +49,8 @@ public class Grid {
     private void populate()
     {
         if (isPopulated == false) {
-            for (int x = 0; x < gridSize; x++) {
-                for (int y = 0; y < gridSize; y++) {
+            for (int y = 0; y < gridSize; y++) {
+                for (int x = 0; x < gridSize; x++) {
                     squares[x][y] = new Square(this, x, y);
                 }
             }
@@ -101,17 +101,18 @@ public class Grid {
     public int getNumMinesAroundSquare(int x, int y) throws IndexOutOfBoundsException
     {
         if ( (x < 0) || (y < 0) || (x >= gridSize) || (y >= gridSize))
-            throw new IndexOutOfBoundsException("Square coordinates must be inside grid.");
-        // TODO: Implement getNumMinesAroundSquare()
+            throw new IndexOutOfBoundsException("Square coordinates must be inside grid. X: "+x+", Y: "+y);
         int fromX = Math.max(x-1, 0), toX = Math.min(x+1, gridSize-1),
             fromY = Math.max(y-1, 0), toY = Math.min(y+1, gridSize-1),
             count = 0;
+        System.out.println("getNumMinesAroundSquare fromX: "+fromX+", toX: "+toX+", fromY: "+fromY+", toY: "+toY);
         for (int i = fromX; i <= toX; i++) {
             for (int j = fromY; j <= toY; j++) {
                 if ( (i == x) && (j == y) ) { continue; }
                 if (squares[i][j].isMine()) { count++; }
             }
         }
+        System.out.println("Count: "+count);
         return count;
     }
     
@@ -122,6 +123,20 @@ public class Grid {
      */
     public void mineClicked(int x, int y) {
         // TODO: Implement mineClicked()
-        
+        // Reveal any mines.
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                squares[i][j].revealIfMine();
+            }
+        }
+    }
+
+    /**
+     * When the player clicks on a square with no adjacent mines, reveal squares around it until it finds a mine.
+     * @param x The X coordinate.
+     * @param y The Y coordinate.
+     */
+    public void revealAroundSquare(int x, int y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

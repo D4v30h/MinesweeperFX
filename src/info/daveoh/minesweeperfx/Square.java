@@ -39,13 +39,15 @@ public class Square {
     
     public Square (final Grid grid, final int x, final int y) {
         this.grid = grid;
+        this.x = x;
+        this.y = y;
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
+                click();
                 if (isMine())
                     System.err.println("I'm a mine!");
                 else
                     System.out.println("I'm not a mine.");
-                grid.mineClicked(x, y);
             }
         });
     }
@@ -74,11 +76,15 @@ public class Square {
      */
     public void click() {
         if (isMine()) {
+            grid.mineClicked(x, y);
             imageView.setImage(Images.Type.SQUARE_MINE_RED.getImage());
         }
         else {
             switch (grid.getNumMinesAroundSquare(x, y)) {
-                case 0: imageView.setImage(Images.Type.SQUARE_EMPTY.getImage()); break;
+                case 0:
+                    imageView.setImage(Images.Type.SQUARE_EMPTY.getImage());
+                    //grid.revealAroundSquare(x, y);
+                    break;
                 case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); break;
                 case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); break;
                 case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); break;
