@@ -79,25 +79,27 @@ public class Square {
      * Updates the Square's image to that of its clicked counterpart.
      */
     public void click() {
-        isRevealed = true;
-        if (isMine()) {
-            grid.mineClicked(x, y);
-            imageView.setImage(Images.Type.SQUARE_MINE_RED.getImage());
-        }
-        else {
-            switch (grid.getNumMinesAroundSquare(x, y)) {
-                case 0:
-                    imageView.setImage(Images.Type.SQUARE_EMPTY.getImage());
-                    grid.revealAroundSquare(x, y);
-                    break;
-                case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); break;
-                case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); break;
-                case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); break;
-                case 4: imageView.setImage(Images.Type.SQUARE_4.getImage()); break;
-                case 5: imageView.setImage(Images.Type.SQUARE_5.getImage()); break;
-                case 6: imageView.setImage(Images.Type.SQUARE_6.getImage()); break;
-                case 7: imageView.setImage(Images.Type.SQUARE_7.getImage()); break;
-                case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); break;
+        if (grid.hasFailed() == false) {
+            isRevealed = true;
+            if (isMine()) {
+                grid.mineClicked(x, y);
+                imageView.setImage(Images.Type.SQUARE_MINE_RED.getImage());
+            }
+            else {
+                switch (grid.getNumMinesAroundSquare(x, y)) {
+                    case 0:
+                        imageView.setImage(Images.Type.SQUARE_EMPTY.getImage());
+                        grid.revealAroundSquare(x, y);
+                        break;
+                    case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); break;
+                    case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); break;
+                    case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); break;
+                    case 4: imageView.setImage(Images.Type.SQUARE_4.getImage()); break;
+                    case 5: imageView.setImage(Images.Type.SQUARE_5.getImage()); break;
+                    case 6: imageView.setImage(Images.Type.SQUARE_6.getImage()); break;
+                    case 7: imageView.setImage(Images.Type.SQUARE_7.getImage()); break;
+                    case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); break;
+                }
             }
         }
     }

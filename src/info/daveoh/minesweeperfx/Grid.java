@@ -32,6 +32,8 @@ public class Grid {
     private Square[][] squares = null;
     private boolean isPopulated = false;
     private boolean hasPlacedMines = false;
+    private boolean hasFailed = false;
+    public boolean hasFailed() { return hasFailed; }
     private Player player;
     public Player getPlayer() { return player; }
     
@@ -125,7 +127,9 @@ public class Grid {
      * @param y The Y coordinate.
      */
     public void mineClicked(int x, int y) {
-        // TODO: Implement mineClicked()
+        // Fail the grid.
+        hasFailed = true;
+        
         // Reveal any mines.
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
