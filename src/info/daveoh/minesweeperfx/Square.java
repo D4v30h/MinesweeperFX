@@ -107,40 +107,49 @@ public class Square {
      */
     public void clickRight() {
         if ( (grid.hasFailed() == false) && (isRevealed() == false) ) {
-            if (isFlagged()) { imageView.setImage(Images.Type.SQUARE.getImage()); }
-            else { imageView.setImage(Images.Type.SQUARE_FLAGGED.getImage()); }
+            if (isFlagged()) {
+                imageView.setImage(Images.Type.SQUARE.getImage());
+                if (isMine()) { grid.mineUnflagged(); }
+            }
+            else {
+                imageView.setImage(Images.Type.SQUARE_FLAGGED.getImage());
+                if (isMine()) { grid.mineFlagged(); }
+            }
             ToggleFlag();
         }
     }
     
     /**
      * Called when clearing an area which isn't mines.
-     * @return true if no mines adjacent, false otherwise.
+     * @return true if no mines adjacent, false otherwise, and false if the square has already been revealed.
      */
     public boolean revealNotMine() {
-        isRevealed = true;
-        int minesAroundSquare = grid.getNumMinesAroundSquare(x, y);
-        switch (minesAroundSquare) {
-            case 0:
-                imageView.setImage(Images.Type.SQUARE_EMPTY.getImage());
-                return true;
-            case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); return false;
-            case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); return false;
-            case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); return false;
-            case 4: imageView.setImage(Images.Type.SQUARE_4.getImage()); return false;
-            case 5: imageView.setImage(Images.Type.SQUARE_5.getImage()); return false;
-            case 6: imageView.setImage(Images.Type.SQUARE_6.getImage()); return false;
-            case 7: imageView.setImage(Images.Type.SQUARE_7.getImage()); return false;
-            case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); return false;
+        if ( (isRevealed() == false) && (isMine() == false) ) {
+            isRevealed = true;
+            int minesAroundSquare = grid.getNumMinesAroundSquare(x, y);
+            switch (minesAroundSquare) {
+                case 0:
+                    imageView.setImage(Images.Type.SQUARE_EMPTY.getImage());
+                    return true;
+                case 1: imageView.setImage(Images.Type.SQUARE_1.getImage()); return false;
+                case 2: imageView.setImage(Images.Type.SQUARE_2.getImage()); return false;
+                case 3: imageView.setImage(Images.Type.SQUARE_3.getImage()); return false;
+                case 4: imageView.setImage(Images.Type.SQUARE_4.getImage()); return false;
+                case 5: imageView.setImage(Images.Type.SQUARE_5.getImage()); return false;
+                case 6: imageView.setImage(Images.Type.SQUARE_6.getImage()); return false;
+                case 7: imageView.setImage(Images.Type.SQUARE_7.getImage()); return false;
+                case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); return false;
+            }
+            return false; // We don't reach this line.
         }
-        return false; // We don't reach this line.
+        return false;
     }
     
     /**
      * Used at the end of the game to reveal any unclicked mines as mines.
      */
     public void revealIfMine() {
-        if (isMine()) {
+        if ( (isRevealed() == false) && (isMine()) ) {
             imageView.setImage(Images.Type.SQUARE_MINE.getImage());
             isRevealed = true;
         }

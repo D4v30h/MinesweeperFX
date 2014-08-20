@@ -28,12 +28,15 @@ public class Grid {
    
     private int gridSize = 0;
     private int mineCount = 0;
+    private int flaggedMines = 0;
     public int getGridSize() { return gridSize; }
     private Square[][] squares = null;
     private boolean isPopulated = false;
     private boolean hasPlacedMines = false;
-    private boolean hasFailed = false;
-    public boolean hasFailed() { return hasFailed; }
+    private boolean hasEnded = false;
+    public boolean hasFailed() { return hasEnded; }
+    private boolean hasSucceeded = false;
+    public boolean hasSucceeded() { return hasSucceeded; }
     private Player player;
     public Player getPlayer() { return player; }
     
@@ -128,7 +131,8 @@ public class Grid {
      */
     public void mineClicked(int x, int y) {
         // Fail the grid.
-        hasFailed = true;
+        hasEnded = true;
+        hasSucceeded = false;
         
         // Reveal any mines.
         for (int i = 0; i < gridSize; i++) {
@@ -173,6 +177,51 @@ public class Grid {
                 }
             }
             
+        }
+    }
+    
+    /**
+     * Increments the flaggedMines count.
+     */
+    public synchronized void mineFlagged() throws IllegalStateException {
+        flaggedMines++;
+        flaggedMinesCheck();
+    }
+    
+    /**
+     * Decrements the flaggedMines count.
+     */
+    public synchronized void mineUnflagged() throws IllegalStateException {
+        flaggedMines--;
+        flaggedMinesCheck();
+    }
+    
+    private void flaggedMinesCheck() throws IllegalStateException {
+        if (flaggedMines < 0)
+            throw new IllegalStateException("The number of flagged mines is below 0.");
+        if (flaggedMines > mineCount)
+            throw new IllegalStateException("The number of flagged mines is above the maximum, "+mineCount+".");
+        
+        // If the player has flagged all of the mines, check to see if they have over-flagged.
+        if (flaggedMines == mineCount) {
+            int flaggedSquares = 0;
+            for (int y = 0; y < gridSize; y++) {
+                for (int x = 0; x < gridSize; x++) {
+                    if (squares[x][y].isFlagged()) { flaggedSquares++; }
+                }
+            }
+            // The player has found all of the mines and won the game.
+            if (flaggedSquares == mineCount) {
+                hasEnded = true;
+                hasSucceeded = true;
+
+                // Reveal any remaining squares.
+                for (int y = 0; y < gridSize; y++) {
+                    for (int x = 0; x < gridSize; x++) {
+                        squares[x][y].revealNotMine();
+                    }
+                }
+            }
         }
     }
 }
