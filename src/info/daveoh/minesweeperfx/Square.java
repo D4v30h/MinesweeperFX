@@ -19,6 +19,7 @@ package info.daveoh.minesweeperfx;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -47,11 +48,8 @@ public class Square {
         imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent me) {
-                if (isMine())
-                    System.err.println("I'm a mine!");
-                else
-                    System.out.println("I'm not a mine.");
-                click();
+                if (me.getButton() == MouseButton.PRIMARY) { clickLeft(); }
+                else if (me.getButton() == MouseButton.SECONDARY) { clickRight(); }
             }
         });
     }
@@ -76,10 +74,10 @@ public class Square {
     }
     
     /**
-     * Updates the Square's image to that of its clicked counterpart.
+     * Registers a click (LMB) on the Square. This presses the square and updates its image to that of its clicked counterpart.
      */
-    public void click() {
-        if (grid.hasFailed() == false) {
+    public void clickLeft() {
+        if ( (grid.hasFailed() == false) && (isFlagged() == false) ) {
             isRevealed = true;
             if (isMine()) {
                 grid.mineClicked(x, y);
@@ -101,6 +99,17 @@ public class Square {
                     case 8: imageView.setImage(Images.Type.SQUARE_8.getImage()); break;
                 }
             }
+        }
+    }
+    
+    /**
+     * Registers a click (RMB) on the Square. This toggles the flagged state of the square updates its image appropriately.
+     */
+    public void clickRight() {
+        if ( (grid.hasFailed() == false) && (isRevealed() == false) ) {
+            if (isFlagged()) { imageView.setImage(Images.Type.SQUARE.getImage()); }
+            else { imageView.setImage(Images.Type.SQUARE_FLAGGED.getImage()); }
+            ToggleFlag();
         }
     }
     
