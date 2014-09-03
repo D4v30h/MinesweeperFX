@@ -64,6 +64,10 @@ public class MinesweeperFX extends Application {
         final private CheckMenuItem menuGameDiffHard = new CheckMenuItem("Hard");
         final private MenuItem menuGameEnd = new MenuItem("End Game");
         final private MenuItem menuGameExit = new MenuItem("Exit");
+    // Sizes
+        private double windowExtraWidth;
+        private double windowExtraHeight;
+        private final static double menuBarHeight = 25.0;
     
     @Override
     public void start(Stage stage) {
@@ -76,12 +80,14 @@ public class MinesweeperFX extends Application {
         setupMenuBar();
         vbox.getChildren().addAll(menuBar, grid);
         
-        scene = new Scene(vbox, 16*Difficulty.EASY.getGridSize(), 16*Difficulty.EASY.getGridSize() + 51);
+        scene = new Scene(vbox, 16*Difficulty.EASY.getGridSize(), 16*Difficulty.EASY.getGridSize() + menuBarHeight);
         
         stage.setTitle("MinesweeperFX");
         stage.setScene(scene);
         stage.show();
-        stage.sizeToScene();
+        
+        windowExtraWidth = ( scene.getWindow().getWidth() - (16*Difficulty.EASY.getGridSize()) );
+        windowExtraHeight = ( scene.getWindow().getHeight() - (16*Difficulty.EASY.getGridSize() + menuBarHeight) );
     }
     
     public MenuBar setupMenuBar() {
@@ -177,8 +183,8 @@ public class MinesweeperFX extends Application {
             }
         }
         
-        scene.getWindow().setWidth(16*size);
-        scene.getWindow().setHeight(16*size + 51);
+        scene.getWindow().setWidth(16*size + windowExtraWidth);
+        scene.getWindow().setHeight(16*size + menuBarHeight + windowExtraHeight);
     }
 
     /**
