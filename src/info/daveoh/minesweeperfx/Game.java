@@ -25,7 +25,7 @@ public class Game {
     private static final int MAX_PLAYERS = 1; // TODO: Support two players.
     private final Difficulty difficulty;
     
-    private Player[] players = new Player[MAX_PLAYERS];
+    private final Player[] players = new Player[MAX_PLAYERS];
     public Player getPlayer(int index) throws IndexOutOfBoundsException {
         if ( (index < 0) || (index > MAX_PLAYERS-1) )
                 throw new IndexOutOfBoundsException("Player index "+index+" is invalid. Max players: "+MAX_PLAYERS);

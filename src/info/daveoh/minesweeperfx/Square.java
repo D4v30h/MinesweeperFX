@@ -34,10 +34,10 @@ public class Square {
     public boolean isFlagged() { return isFlagged; }
     private boolean isRevealed = false;
     public boolean isRevealed() { return isRevealed; }
-    private ImageView imageView = new ImageView(Images.Type.SQUARE.getImage());
+    private final ImageView imageView = new ImageView(Images.Type.SQUARE.getImage());
     public ImageView getImageView() { return imageView; }
-    private Grid grid;
-    private int x, y;
+    private final Grid grid;
+    private final int x, y;
     public int getX() { return x; }
     public int getY() { return y; }
     

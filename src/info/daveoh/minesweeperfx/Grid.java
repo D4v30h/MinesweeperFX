@@ -37,7 +37,7 @@ public class Grid {
     public boolean hasFailed() { return hasEnded; }
     private boolean hasSucceeded = false;
     public boolean hasSucceeded() { return hasSucceeded; }
-    private Player player;
+    private final Player player;
     public Player getPlayer() { return player; }
     
     public Grid(Player player, Difficulty difficulty) {
@@ -148,7 +148,7 @@ public class Grid {
      * @param y The Y coordinate.
      */
     public void revealAroundSquare(int x, int y) {
-        ArrayList<Square> squaresToReveal = new ArrayList<Square>();
+        ArrayList<Square> squaresToReveal = new ArrayList<>();
         {
             int fromX = Math.max(x-1, 0), toX = Math.min(x+1, gridSize-1),
                 fromY = Math.max(y-1, 0), toY = Math.min(y+1, gridSize-1);

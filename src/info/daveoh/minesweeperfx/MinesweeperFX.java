@@ -17,20 +17,17 @@
 
 package info.daveoh.minesweeperfx;
 
-import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -96,12 +93,14 @@ public class MinesweeperFX extends Application {
         
         // Menu Game > New Game
         menuGameNew1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 game = new Game(1, difficulty);
                 menuGameEnd.setDisable(false);
             }
         });
         menuGameNew2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 game = new Game(2, difficulty);
                 menuGameEnd.setDisable(false);
@@ -111,16 +110,19 @@ public class MinesweeperFX extends Application {
         
         // Menu Game > Difficulty
         menuGameDiffEasy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 setDifficulty(Difficulty.EASY);
             }
         });
         menuGameDiffMedium.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 setDifficulty(Difficulty.MEDIUM);
             }
         });
         menuGameDiffHard.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 setDifficulty(Difficulty.HARD);
             }
@@ -128,12 +130,14 @@ public class MinesweeperFX extends Application {
         menuGameDiff.getItems().addAll(menuGameDiffEasy, menuGameDiffMedium, menuGameDiffHard);
         
         menuGameEnd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 // TODO
                 menuGameEnd.setDisable(true);
             }
         });
         menuGameExit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent t) {
                 // Exit the application.
                 Platform.exit();

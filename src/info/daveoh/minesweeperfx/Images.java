@@ -17,7 +17,6 @@
 
 package info.daveoh.minesweeperfx;
 
-import java.io.File;
 import javafx.scene.image.Image;
 
 /**
