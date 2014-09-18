@@ -1,4 +1,4 @@
 MinesweeperFX
 =============
 
-A multiplayer game of Minesweeper created using JavaFX.
+A game of Minesweeper created using JavaFX.
